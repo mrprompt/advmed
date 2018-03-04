@@ -23,6 +23,6 @@ class DefaultController extends Controller
     */
     public function index(): JsonResponse
     {
-        return $this->json([]);
+        return $this->json('OK in ' . date('Y-m-d H:i'));
     }
 }
