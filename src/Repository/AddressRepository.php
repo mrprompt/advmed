@@ -1,12 +1,12 @@
 <?php
 namespace App\Repository;
 
-use App\Entity\PhoneEntity;
+use App\Entity\AddressEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class PhoneRepository extends ServiceEntityRepository
+class AddressRepository extends ServiceEntityRepository
 {
     /**
      * Constructor
@@ -15,34 +15,34 @@ class PhoneRepository extends ServiceEntityRepository
      */
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, PhoneEntity::class);
+        parent::__construct($registry, AddressEntity::class);
 
         $this->em = $this->getEntityManager();
     }
     
     /**
-     * Create phone
+     * Create address
      */
-    public function create(PhoneEntity $phone)
+    public function create(AddressEntity $address)
     {
-        $this->em->persist($phone);
+        $this->em->persist($address);
         $this->em->flush();
 
-        return $phone;
+        return $address;
     }
     
     /**
-     * update phone
+     * update address
      */
-    public function update(int $id, PhoneEntity $phone)
+    public function update(int $id, AddressEntity $address)
     {
-        $search = $this->em->getRepository(PhoneEntity::class)->find($id);
+        $search = $this->em->getRepository(AddressEntity::class)->find($id);
 
         if (!$search) {
-            throw new \OutOfRangeException('No phone found for id ' . $id);
+            throw new \OutOfRangeException('No address found for id ' . $id);
         }
 
-        $search->setNumber($phone->getNumber());
+        $search->setNumber($address->getNumber());
         
         $this->em->flush();
 
