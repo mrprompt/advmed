@@ -68,6 +68,7 @@ class UserEntityTest extends TestCase
     /**
      * @test
      * @dataProvider validObjects
+     * @covers       \App\Entity\UserEntity::__construct
      * @covers       \App\Entity\UserEntity::getId
      */
     public function getIdReturnValue($obj)
@@ -80,6 +81,7 @@ class UserEntityTest extends TestCase
     /**
      * @test
      * @dataProvider validObjects
+     * @covers       \App\Entity\UserEntity::__construct
      * @covers       \App\Entity\UserEntity::setName
      */
     public function setNameReturnEmpty($obj)
@@ -92,6 +94,7 @@ class UserEntityTest extends TestCase
     /**
      * @test
      * @dataProvider validObjects
+     * @covers       \App\Entity\UserEntity::__construct
      * @covers       \App\Entity\UserEntity::getName
      */
     public function getNameReturnValue($obj)
@@ -104,6 +107,7 @@ class UserEntityTest extends TestCase
     /**
      * @test
      * @dataProvider validObjects
+     * @covers       \App\Entity\UserEntity::__construct
      * @covers       \App\Entity\UserEntity::setEmail
      */
     public function setEmailReturnEmpty($obj)
@@ -116,6 +120,7 @@ class UserEntityTest extends TestCase
     /**
      * @test
      * @dataProvider validObjects
+     * @covers       \App\Entity\UserEntity::__construct
      * @covers       \App\Entity\UserEntity::getEmail
      */
     public function getEmailReturnValue($obj)
@@ -128,6 +133,7 @@ class UserEntityTest extends TestCase
     /**
      * @test
      * @dataProvider validObjects
+     * @covers       \App\Entity\UserEntity::__construct
      * @covers       \App\Entity\UserEntity::setPassword
      */
     public function setPasswordReturnEmpty($obj)
@@ -140,6 +146,7 @@ class UserEntityTest extends TestCase
     /**
      * @test
      * @dataProvider validObjects
+     * @covers       \App\Entity\UserEntity::__construct
      * @covers       \App\Entity\UserEntity::getPassword
      */
     public function getPasswordReturnValue($obj)
@@ -152,6 +159,7 @@ class UserEntityTest extends TestCase
     /**
      * @test
      * @dataProvider validObjects
+     * @covers       \App\Entity\UserEntity::__construct
      * @covers       \App\Entity\UserEntity::setCreatedAt
      */
     public function setCreatedAtReturnEmpty($obj)
@@ -164,6 +172,7 @@ class UserEntityTest extends TestCase
     /**
      * @test
      * @dataProvider validObjects
+     * @covers       \App\Entity\UserEntity::__construct
      * @covers       \App\Entity\UserEntity::getCreatedAt
      */
     public function getCreatedAtReturnValue($obj)
@@ -176,6 +185,7 @@ class UserEntityTest extends TestCase
     /**
      * @test
      * @dataProvider validObjects
+     * @covers       \App\Entity\UserEntity::__construct
      * @covers       \App\Entity\UserEntity::setUpdatedAt
      */
     public function setUpdatedAtReturnEmpty($obj)
@@ -188,6 +198,7 @@ class UserEntityTest extends TestCase
     /**
      * @test
      * @dataProvider validObjects
+     * @covers       \App\Entity\UserEntity::__construct
      * @covers       \App\Entity\UserEntity::getUpdatedAt
      */
     public function getUpdatedAtReturnValue($obj)
