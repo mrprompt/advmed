@@ -75,4 +75,60 @@ class UserController extends Controller
             return $this->json($ex->getMessage(), 400);
         }
     }
+
+    /**
+     * @Route("/user/{id}", name="user_update")
+     * @Method("POST")
+     *
+     * @param UserRepository        $repository
+     * @param SerializerInterface   $serializer
+     * @param Request               $request
+     */
+    public function update(
+        UserRepository $repository, 
+        SerializerInterface $serializer,
+        Request $request
+    ): JsonResponse
+    {
+        $id = (int) $request->get('id');
+        
+        $user = $repository->find($id);
+        
+        if (!$user) {
+            throw $this->createNotFoundException('The user does not exist');
+        }
+
+        $user->setName($request->get('name'));
+        $user->setEmail($request->get('email'));
+
+        $phone = $user->getPhone()->first();
+
+        if ($phone === false) {
+            $phone = new PhoneEntity;
+
+            $user->addPhone($phone);
+        }
+        
+        $phone->setNumber($request->get('phone'));
+
+        $address = $user->getAddress()->first();
+
+        if ($address === false) {
+            $address = new AddressEntity;
+
+            $user->addAddress($address);
+        }
+
+        $address->setStreet($request->get('street'));
+        $address->setNumber($request->get('number'));
+        $address->setNeighborhood($request->get('neighborhood'));
+
+        try {
+            $repository->update($id, $user);
+
+            return $this->json($user, 204);
+        } catch (\Exception $ex) {
+            return $this->json($ex->getMessage(), 400);
+        }
+    }
 }

@@ -76,4 +76,16 @@ class UserControllerTest extends WebTestCase
         $this->assertNotEmpty($result['createdAt']);
         $this->assertNotEmpty($result['updatedAt']);
     }
+    
+    /**
+     * @test
+     * @dataProvider validUsers
+     */
+    public function updateWithValidRequestReturnResponseWithId($data)
+    {
+        $crawler = $this->client->request('POST', '/user/1', $data);
+        $result = json_decode($this->client->getResponse()->getContent(), true);
+
+        $this->assertEquals(204, $this->client->getResponse()->getStatusCode());
+    }
 }
