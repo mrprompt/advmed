@@ -44,7 +44,7 @@ class UserRepository extends ServiceEntityRepository
         $search = $this->em->getRepository(UserEntity::class)->find($id);
 
         if (!$search) {
-            throw $this->createNotFoundException('No user found for id ' . $id);
+            throw new \OutOfRangeException('No user found for id ' . $id);
         }
 
         $search->setName($user->getName());

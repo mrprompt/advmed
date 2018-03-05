@@ -57,11 +57,50 @@ class UserRepositoryTest extends KernelTestCase
     /**
      * @test
      * @covers \App\Repository\UserRepository::__construct
-     * @covers \App\Repository\UserRepository::update
-     * @expectedException \BadMethodCallException
+     * @covers \App\Repository\UserRepository::create
      */
-    public function update()
+    public function createMustBeReturnUserEntity()
     {
-        $result = $this->obj->update(1, new UserEntity());
+        $user = new UserEntity();
+        $user->setName('foo');
+        $user->setEmail(uniqid() . '@foo.bar');
+        $user->setPassword('foo');
+        
+        $result = $this->obj->create($user);
+
+        $this->assertInstanceOf(UserEntity::class, $result);
+    }
+
+    /**
+     * @test
+     * @covers \App\Repository\UserRepository::__construct
+     * @covers \App\Repository\UserRepository::update
+     */
+    public function updateMustBeReturnUserEntity()
+    {
+        $user = new UserEntity();
+        $user->setName('foo');
+        $user->setEmail(uniqid() . '@foo.bar');
+
+        $result = $this->obj->update(1, $user);
+
+        $this->assertInstanceOf(UserEntity::class, $result);
+    }
+
+    /**
+     * @test
+     * @covers \App\Repository\UserRepository::__construct
+     * @covers \App\Repository\UserRepository::update
+     * @expectedException \OutOfRangeException
+     */
+    public function updateWithAbsentThrowsException()
+    {
+        $user = new UserEntity();
+        $user->setName('foo');
+        $user->setEmail(uniqid() . '@foo.bar');
+
+        $result = $this->obj->update(0, $user);
+
+        $this->assertInstanceOf(UserEntity::class, $result);
     }
 }
