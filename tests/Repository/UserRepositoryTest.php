@@ -51,7 +51,7 @@ class UserRepositoryTest extends KernelTestCase
      */
     public function createWithUnpopulatedEntityThrowsException()
     {
-        $result = $this->obj->create(new UserEntity());
+        $this->obj->create(new UserEntity());
     }
 
     /**
@@ -99,8 +99,32 @@ class UserRepositoryTest extends KernelTestCase
         $user->setName('foo');
         $user->setEmail(uniqid() . '@foo.bar');
 
-        $result = $this->obj->update(0, $user);
+        $this->obj->update(0, $user);
+    }
+
+    /**
+     * @test
+     * @covers \App\Repository\UserRepository::__construct
+     * @covers \App\Repository\UserRepository::delete
+     */
+    public function deleteMustBeReturnUserEntity()
+    {
+        $user = new UserEntity();
+        $result = $this->obj->delete(1, $user);
 
         $this->assertInstanceOf(UserEntity::class, $result);
+    }
+
+    /**
+     * @test
+     * @covers \App\Repository\UserRepository::__construct
+     * @covers \App\Repository\UserRepository::delete
+     * @expectedException \OutOfRangeException
+     */
+    public function deleteWithAbsentThrowsException()
+    {
+        $user = new UserEntity();
+        
+        $this->obj->delete(0, $user);
     }
 }

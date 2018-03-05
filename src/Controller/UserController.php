@@ -78,7 +78,7 @@ class UserController extends Controller
 
     /**
      * @Route("/user/{id}", name="user_update")
-     * @Method("POST")
+     * @Method("PUT")
      *
      * @param UserRepository        $repository
      * @param SerializerInterface   $serializer
@@ -91,7 +91,7 @@ class UserController extends Controller
     ): JsonResponse
     {
         $id = (int) $request->get('id');
-        
+
         $user = $repository->find($id);
         
         if (!$user) {
@@ -130,5 +130,61 @@ class UserController extends Controller
         } catch (\Exception $ex) {
             return $this->json($ex->getMessage(), 400);
         }
+    }
+
+    /**
+     * @Route("/user/{id}", name="user_delete")
+     * @Method("DELETE")
+     *
+     * @param UserRepository        $repository
+     * @param SerializerInterface   $serializer
+     * @param Request               $request
+     */
+    public function delete(
+        UserRepository $repository, 
+        SerializerInterface $serializer,
+        Request $request
+    ): JsonResponse
+    {
+        $id = (int) $request->get('id');
+
+        $user = $repository->find($id);
+
+        if (!$user) {
+            throw $this->createNotFoundException('The user does not exist');
+        }
+
+        try {
+            $repository->delete($id, $user);
+
+            return $this->json($user, 204);
+        } catch (\Exception $ex) {
+            return $this->json($ex->getMessage(), 500);
+        }
+    }
+
+    /**
+     * @Route("/user/{id}", name="user_details")
+     * @Method("GET")
+     *
+     * @param UserRepository        $repository
+     * @param SerializerInterface   $serializer
+     * @param Request               $request
+     */
+    public function details(
+        UserRepository $repository, 
+        SerializerInterface $serializer,
+        Request $request
+    ): JsonResponse
+    {
+        $id = (int) $request->get('id');
+
+        $user = $repository->find($id);
+
+        if (!$user) {
+            throw $this->createNotFoundException('The user does not exist');
+        }
+
+        return $this->json($user, 200);
     }
 }

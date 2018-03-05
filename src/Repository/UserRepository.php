@@ -53,4 +53,20 @@ class UserRepository extends ServiceEntityRepository
 
         return $search;
     }
+    
+    /**
+     * delete user
+     */
+    public function delete(int $id, UserEntity $user)
+    {
+        $search = $this->em->getRepository(UserEntity::class)->find($id);
+
+        if (!$search) {
+            throw new \OutOfRangeException('No user found for id ' . $id);
+        }
+
+        $this->em->flush();
+
+        return $search;
+    }
 }
