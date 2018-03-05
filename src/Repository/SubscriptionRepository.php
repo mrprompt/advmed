@@ -159,6 +159,7 @@ class SubscriptionRepository extends ServiceEntityRepository
 
         $search->setTitle($title);
         $search->setDescription($description);
+        $search->setActive(true);
 
         $errors = $this->validator->validate($search);
 
@@ -195,5 +196,54 @@ class SubscriptionRepository extends ServiceEntityRepository
         $this->em->flush();
 
         return $search;
+    }
+
+    /**
+     * Report
+     * 
+     * @return array
+     */
+    public function reportAll(): ?array
+    {
+        $report = $this
+            ->createQueryBuilder('s')
+            ->andWhere('s.active = :active')
+            ->setParameter('active', true)
+            ->select('s, SUM(s.price) as total')
+            ->groupBy('s.user')
+            ->getQuery()
+            ->getResult();
+
+        return $report;
+    }
+
+    /**
+     * Report by user
+     * 
+     * @param int $uid
+     * 
+     * @return array
+     * 
+     * @throws \OutOfRangeException
+     */
+    public function reportByUser(int $uid): ?array
+    {
+        $user = $this->userRepository->find($uid);
+
+        if (!$user) {
+            throw new \OutOfRangeException('No user found for subscription');
+        }
+
+        $report = $this
+            ->createQueryBuilder('s')
+            ->andWhere('s.active = :active')
+            ->andWhere('s.user = :user')
+            ->setParameter('active', true)
+            ->setParameter('user', $user)
+            ->select('s, SUM(s.price) as total')
+            ->getQuery()
+            ->getResult();
+
+        return $report;
     }
 }

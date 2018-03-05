@@ -133,4 +133,39 @@ class SubscriptionRepositoryTest extends KernelTestCase
     {
         $this->obj->delete(0);
     }
+
+    /**
+     * @test
+     * @covers \App\Repository\SubscriptionRepository::__construct
+     * @covers \App\Repository\SubscriptionRepository::reportAll
+     */
+    public function reportAllMustBeReturnArray()
+    {
+        $result = $this->obj->reportAll();
+
+        $this->assertTrue(is_array($result));
+    }
+
+    /**
+     * @test
+     * @covers \App\Repository\SubscriptionRepository::__construct
+     * @covers \App\Repository\SubscriptionRepository::reportByUser
+     */
+    public function reportByUserWithValidUserReturnArray()
+    {
+        $result = $this->obj->reportByUser(1);
+
+        $this->assertTrue(is_array($result));
+    }
+
+    /**
+     * @test
+     * @covers \App\Repository\SubscriptionRepository::__construct
+     * @covers \App\Repository\SubscriptionRepository::reportByUser
+     * @expectedException \OutOfRangeException
+     */
+    public function reportByUserWithAbsentThrowsException()
+    {
+        $this->obj->reportByUser(0);
+    }
 }
