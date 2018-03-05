@@ -18,7 +18,11 @@ class AdvertisementEntity
 {
     use Traits\Base;
 
-    const PERIOD = ['daily', 'week', 'month'];
+    const PERIOD = [
+        'daily' => 3.33, 
+        'week' => 5.00,
+        'month' => 10.00
+    ];
     
     /**
      * @var int
@@ -120,8 +124,8 @@ class AdvertisementEntity
      */ 
     public function setPeriod(string $period)
     {
-        if (!in_array($period, self::PERIOD)) {
-            throw new \TypeError('Invalid period');
+        if (!array_key_exists($period, self::PERIOD)) {
+            throw new \TypeError('Invalid period ' . $period);
         }
         
         $this->period = $period;
