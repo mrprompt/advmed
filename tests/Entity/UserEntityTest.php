@@ -60,6 +60,7 @@ class UserEntityTest extends TestCase
         $obj->password = 'fooo';
         $obj->createdAt = new DateTime;
         $obj->updatedAt = new DateTime;
+        $obj->active = true;
 
         return [
             [
@@ -263,5 +264,31 @@ class UserEntityTest extends TestCase
         $result = $this->user->addPhone($phone);
 
         $this->assertNull($result);
+    }
+
+    /**
+     * @test
+     * @dataProvider validObjects
+     * @covers       \App\Entity\UserEntity::__construct
+     * @covers       \App\Entity\UserEntity::setActive
+     */
+    public function setActiveReturnEmpty($obj)
+    {
+        $result = $this->user->setActive($obj->active);
+
+        $this->assertEmpty($result);
+    }
+    
+    /**
+     * @test
+     * @dataProvider validObjects
+     * @covers       \App\Entity\UserEntity::__construct
+     * @covers       \App\Entity\UserEntity::getActive
+     */
+    public function getActiveReturnValue($obj)
+    {
+        $this->modifyAttribute($this->user, 'active', $obj->active);
+
+        $this->assertEquals($this->user->getActive(), $obj->active);
     }
 }

@@ -127,7 +127,8 @@ class SubscriptionRepository extends ServiceEntityRepository
             $userEntity = $this->userRepository->find($user);
             $userEntity->addSubscription($subscription);
             
-            $this->userRepository->update($user, $userEntity);
+            $this->em->persist($userEntity);
+            $this->em->flush();
 
             return $subscription;
         } catch (\TypeError $ex) {

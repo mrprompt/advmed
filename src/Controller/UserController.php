@@ -3,9 +3,6 @@ declare(strict_types = 1);
 
 namespace App\Controller;
 
-use App\Entity\AddressEntity;
-use App\Entity\PhoneEntity;
-use App\Entity\UserEntity;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -30,7 +27,10 @@ class UserController extends Controller
      * @param UserRepository         $repository
      * @param SerializerInterface    $serializer
      */
-    public function index(UserRepository $repository, SerializerInterface $serializer): JsonResponse
+    public function index(
+        UserRepository $repository, 
+        SerializerInterface $serializer
+    ): JsonResponse
     {
         $users = $repository->findAll();
 
@@ -57,24 +57,24 @@ class UserController extends Controller
             $request->request->replace($data);
         }
 
-        $user = new UserEntity;
-        $user->setName($request->get('name'));
-        $user->setEmail($request->get('email'));
-        $user->setPassword($request->get('password'));
-
-        $phone = new PhoneEntity;
-        $phone->setNumber($request->get('phone'));
-
-        $address = new AddressEntity;
-        $address->setStreet($request->get('street'));
-        $address->setNumber($request->get('number'));
-        $address->setNeighborhood($request->get('neighborhood'));
-
-        $user->addAddress($address);
-        $user->addPhone($phone);
+        $name = $request->get('name');
+        $email = $request->get('email');
+        $password = $request->get('password');
+        $phone = $request->get('phone');
+        $street = $request->get('street');
+        $number = $request->get('number');
+        $neighborhood = $request->get('neighborhood');
 
         try {
-            $repository->create($user);
+            $user = $repository->create(
+                $name,
+                $email,
+                $password,
+                $phone,
+                $street,
+                $number,
+                $neighborhood
+            );
 
             return $this->json($user, 201);
         } catch (\Exception $ex) {
@@ -96,49 +96,32 @@ class UserController extends Controller
         Request $request
     ): JsonResponse
     {
-        $id = (int) $request->get('id');
-
-        $user = $repository->find($id);
-        
-        if (!$user) {
-            throw $this->createNotFoundException('The user does not exist');
-        }
-
         if ($request->getContentType() === 'json') {
             $data = json_decode($request->getContent(), true);
             
             $request->request->replace($data);
         }
 
-        $user->setName($request->get('name'));
-        $user->setEmail($request->get('email'));
-
-        $phone = $user->getPhone()->first();
-
-        if ($phone === false) {
-            $phone = new PhoneEntity;
-
-            $user->addPhone($phone);
-        }
-        
-        $phone->setNumber($request->get('phone'));
-
-        $address = $user->getAddress()->first();
-
-        if ($address === false) {
-            $address = new AddressEntity;
-
-            $user->addAddress($address);
-        }
-
-        $address->setStreet($request->get('street'));
-        $address->setNumber($request->get('number'));
-        $address->setNeighborhood($request->get('neighborhood'));
+        $id = (int) $request->get('id');
+        $name = $request->get('name');
+        $phone = $request->get('phone');
+        $street = $request->get('street');
+        $number = $request->get('number');
+        $neighborhood = $request->get('neighborhood');
 
         try {
-            $repository->update($id, $user);
+            $user = $repository->update(
+                $id, 
+                $name, 
+                $phone, 
+                $street, 
+                $number, 
+                $neighborhood
+            );
 
             return $this->json($user, 204);
+        } catch (\OutOfRangeException $ex) {
+            throw $this->createNotFoundException('The user does not exist');
         } catch (\Exception $ex) {
             return $this->json($ex->getMessage(), 400);
         }
@@ -160,16 +143,12 @@ class UserController extends Controller
     {
         $id = (int) $request->get('id');
 
-        $user = $repository->find($id);
-
-        if (!$user) {
-            throw $this->createNotFoundException('The user does not exist');
-        }
-
         try {
-            $repository->delete($id, $user);
+            $user = $repository->delete($id);
 
             return $this->json($user, 204);
+        } catch (\OutOfRangeException $ex) {
+            throw $this->createNotFoundException('The user does not exist');
         } catch (\Exception $ex) {
             return $this->json($ex->getMessage(), 500);
         }

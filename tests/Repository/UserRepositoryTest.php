@@ -47,11 +47,19 @@ class UserRepositoryTest extends KernelTestCase
      * @test
      * @covers \App\Repository\UserRepository::__construct
      * @covers \App\Repository\UserRepository::create
-     * @expectedException \Doctrine\DBAL\Exception\NotNullConstraintViolationException
+     * @expectedException \InvalidArgumentException
      */
     public function createWithUnpopulatedEntityThrowsException()
     {
-        $this->obj->create(new UserEntity());
+        $this->obj->create(
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            ''
+        );
     }
 
     /**
@@ -61,12 +69,15 @@ class UserRepositoryTest extends KernelTestCase
      */
     public function createMustBeReturnUserEntity()
     {
-        $user = new UserEntity();
-        $user->setName('foo');
-        $user->setEmail(uniqid() . '@foo.bar');
-        $user->setPassword('foo');
-        
-        $result = $this->obj->create($user);
+        $result = $this->obj->create(
+            'Foo Bar',
+            'foo' . uniqid() . '@bar.bar',
+            uniqid(),
+            '00000',
+            '1A',
+            'FooBarBar',
+            'FooBarBarBar'
+        );
 
         $this->assertInstanceOf(UserEntity::class, $result);
     }
@@ -78,11 +89,14 @@ class UserRepositoryTest extends KernelTestCase
      */
     public function updateMustBeReturnUserEntity()
     {
-        $user = new UserEntity();
-        $user->setName('foo');
-        $user->setEmail(uniqid() . '@foo.bar');
-
-        $result = $this->obj->update(1, $user);
+        $result = $this->obj->update(
+            1,
+            'Foo Bar',
+            '00000',
+            '1A',
+            'FooBarBar',
+            'FooBarBarBar'
+        );
 
         $this->assertInstanceOf(UserEntity::class, $result);
     }
@@ -95,11 +109,14 @@ class UserRepositoryTest extends KernelTestCase
      */
     public function updateWithAbsentThrowsException()
     {
-        $user = new UserEntity();
-        $user->setName('foo');
-        $user->setEmail(uniqid() . '@foo.bar');
-
-        $this->obj->update(0, $user);
+        $this->obj->update(
+            0,
+            'Foo Bar',
+            '00000',
+            '1A',
+            'FooBarBar',
+            'FooBarBarBar'
+        );
     }
 
     /**
@@ -109,8 +126,7 @@ class UserRepositoryTest extends KernelTestCase
      */
     public function deleteMustBeReturnUserEntity()
     {
-        $user = new UserEntity();
-        $result = $this->obj->delete(1, $user);
+        $result = $this->obj->delete(1);
 
         $this->assertInstanceOf(UserEntity::class, $result);
     }
@@ -125,6 +141,6 @@ class UserRepositoryTest extends KernelTestCase
     {
         $user = new UserEntity();
         
-        $this->obj->delete(0, $user);
+        $this->obj->delete(0);
     }
 }

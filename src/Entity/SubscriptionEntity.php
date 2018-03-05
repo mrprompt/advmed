@@ -67,9 +67,9 @@ class SubscriptionEntity
     private $user;
     
     /**
-     * @var \DateTime
+     * @var boolean
      *
-     * @ORM\Column(name="active", type="boolean")
+     * @ORM\Column(name="active", type="boolean", options={"default": true})
      * @Assert\Type("bool")
      */
     private $active;

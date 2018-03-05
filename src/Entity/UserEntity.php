@@ -75,6 +75,14 @@ class UserEntity
     private $subscription;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="active", type="boolean", options={"default": true})
+     * @Assert\Type("bool")
+     */
+    private $active;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
@@ -224,5 +232,25 @@ class UserEntity
     public function addSubscription(SubscriptionEntity $subscription)
     {
         $this->subscription->add($subscription);
+    }
+
+    /**
+     * Set active
+     *
+     * @param string $active
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * Get active
+     *
+     * @return string
+     */
+    public function getActive()
+    {
+        return $this->active;
     }
 }
