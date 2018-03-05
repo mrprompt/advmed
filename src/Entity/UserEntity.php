@@ -58,12 +58,12 @@ class UserEntity
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\AddressEntity", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="\App\Entity\AddressEntity", mappedBy="user", cascade={"persist", "remove"})
      */
     private $address;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\PhoneEntity", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="\App\Entity\PhoneEntity", mappedBy="user", cascade={"persist", "remove"})
      */
     private $phone;
 

@@ -18,9 +18,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class DefaultController extends Controller
 {
     /**
-    * @Route("/", name="homepage")
-    * @Method("GET")
-    */
+     * @Route("/", name="homepage")
+     * @Method("GET")
+     */
     public function index(): JsonResponse
     {
         return $this->json('OK in ' . date('Y-m-d H:i'));
