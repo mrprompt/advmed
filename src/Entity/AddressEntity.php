@@ -9,6 +9,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Address Entity
+ * 
+ * @author Thiago Paes <mrprompt@gmail.com>
  *
  * @ORM\Table(name="address")
  * @ORM\Entity(repositoryClass="App\Repository\AddressRepository")

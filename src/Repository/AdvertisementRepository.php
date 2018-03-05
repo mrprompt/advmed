@@ -1,10 +1,17 @@
 <?php
+declare(strict_types = 1);
+
 namespace App\Repository;
 
 use App\Entity\AdvertisementEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
+/**
+ * Advertisement Repository
+ * 
+ * @author Thiago Paes <mrprompt@gmail.com>
+ */
 class AdvertisementRepository extends ServiceEntityRepository
 {
     /**

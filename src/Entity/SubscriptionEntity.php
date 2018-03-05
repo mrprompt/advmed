@@ -10,6 +10,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Subscription Entity
+ * 
+ * @author Thiago Paes <mrprompt@gmail.com>
  *
  * @ORM\Table(name="subscriptions")
  * @ORM\Entity(repositoryClass="App\Repository\SubscriptionRepository")

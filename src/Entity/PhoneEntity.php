@@ -9,6 +9,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Phone Entity
+ * 
+ * @author Thiago Paes <mrprompt@gmail.com>
  *
  * @ORM\Table(name="phone")
  * @ORM\Entity(repositoryClass="App\Repository\PhoneRepository")

@@ -1,10 +1,17 @@
 <?php
+declare(strict_types = 1);
+
 namespace App\Repository;
 
 use App\Entity\SubscriptionEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
+/**
+ * Subscription Repository
+ * 
+ * @author Thiago Paes <mrprompt@gmail.com>
+ */
 class SubscriptionRepository extends ServiceEntityRepository
 {
     /**

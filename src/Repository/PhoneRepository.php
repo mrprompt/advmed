@@ -1,4 +1,6 @@
 <?php
+declare(strict_types = 1);
+
 namespace App\Repository;
 
 use App\Entity\PhoneEntity;
@@ -6,6 +8,11 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
+/**
+ * Phone Repository
+ * 
+ * @author Thiago Paes <mrprompt@gmail.com>
+ */
 class PhoneRepository extends ServiceEntityRepository
 {
     /**
