@@ -70,7 +70,11 @@ class UserEntity
     private $phone;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\SubscriptionEntity", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity="\App\Entity\SubscriptionEntity", cascade={"persist", "remove"})
+     * @ORM\JoinTable(name="users_subscriptions",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="subscription_id", referencedColumnName="id", unique=true)}
+     * )
      */
     private $subscription;
 

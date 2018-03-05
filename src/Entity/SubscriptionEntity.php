@@ -61,12 +61,6 @@ class SubscriptionEntity
     private $advertisement;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\UserEntity", inversedBy="subscription")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    private $user;
-    
-    /**
      * @var boolean
      *
      * @ORM\Column(name="active", type="boolean", options={"default": true})

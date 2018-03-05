@@ -59,6 +59,11 @@ class Subscription extends Fixture implements DependentFixtureInterface
         $subscription->setAdvertisement($this->getReference('advertisement_' . $i));
 
         $manager->persist($subscription);
+        
+        $user->addSubscription($subscription);
+
+        $manager->persist($user);
+        
         $manager->flush();
 
         return $subscription;

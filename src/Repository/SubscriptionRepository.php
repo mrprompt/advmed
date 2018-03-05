@@ -124,6 +124,8 @@ class SubscriptionRepository extends ServiceEntityRepository
             $subscription->setValidity($validity);
             $subscription->setAdvertisement($advertisement);
 
+            $this->em->persist($subscription);
+
             $userEntity = $this->userRepository->find($user);
             $userEntity->addSubscription($subscription);
             
@@ -206,14 +208,9 @@ class SubscriptionRepository extends ServiceEntityRepository
      */
     public function reportAll(): ?array
     {
-        $report = $this
-            ->createQueryBuilder('s')
-            ->andWhere('s.active = :active')
-            ->setParameter('active', true)
-            ->select('s, SUM(s.price) as total')
-            ->groupBy('s.user')
-            ->getQuery()
-            ->getResult();
+        $report = $this->findBy([
+            'active' => true
+        ]);
 
         return $report;
     }
@@ -235,15 +232,7 @@ class SubscriptionRepository extends ServiceEntityRepository
             throw new \OutOfRangeException('No user found for subscription');
         }
 
-        $report = $this
-            ->createQueryBuilder('s')
-            ->andWhere('s.active = :active')
-            ->andWhere('s.user = :user')
-            ->setParameter('active', true)
-            ->setParameter('user', $user)
-            ->select('s, SUM(s.price) as total')
-            ->getQuery()
-            ->getResult();
+        $report = $user->getSubscription()->toArray();
 
         return $report;
     }

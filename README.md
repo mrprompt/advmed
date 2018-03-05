@@ -18,6 +18,12 @@ composer.phar install
 ./bin/console doctrine:schema:create
 ```
 
+3 - Load fixtures
+
+```console
+./bin/console doctrine:fixtures:load
+```
+
 ## Running
 
 ```console
