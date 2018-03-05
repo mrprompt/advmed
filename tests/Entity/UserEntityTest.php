@@ -6,6 +6,7 @@ namespace App\Tests\Entity;
 use App\Tests\Entity\Traits\ChangeProtectedAttribute;
 use App\Entity\UserEntity;
 use App\Entity\AddressEntity;
+use App\Entity\PhoneEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -233,6 +234,33 @@ class UserEntityTest extends TestCase
     {
         $address = new AddressEntity;
         $result = $this->user->addAddress($address);
+
+        $this->assertNull($result);
+    }
+
+    /**
+     * @test
+     * @dataProvider validObjects
+     * @covers       \App\Entity\UserEntity::__construct
+     * @covers       \App\Entity\UserEntity::getPhone
+     */
+    public function getPhoneMustBeReturnArrayCollection()
+    {
+        $result = $this->user->getPhone();
+
+        $this->assertInstanceOf(ArrayCollection::class, $result);
+    }
+
+    /**
+     * @test
+     * @dataProvider validObjects
+     * @covers       \App\Entity\UserEntity::__construct
+     * @covers       \App\Entity\UserEntity::addPhone
+     */
+    public function addPhoneMustBeReturn()
+    {
+        $phone = new PhoneEntity;
+        $result = $this->user->addPhone($phone);
 
         $this->assertNull($result);
     }

@@ -8,13 +8,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Address Entity
+ * Phone Entity
  *
- * @ORM\Table(name="address")
- * @ORM\Entity(repositoryClass="App\Repository\AddressRepository")
+ * @ORM\Table(name="phone")
+ * @ORM\Entity(repositoryClass="App\Repository\PhoneRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class AddressEntity
+class PhoneEntity
 {
     use Traits\Base;
     
@@ -30,26 +30,10 @@ class AddressEntity
     /**
      * @var string
      *
-     * @ORM\Column(name="street", type="string", length=255)
-     * @Assert\NotBlank(message="Street should not be blank")
-     */
-    private $street;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="number", type="string", length=10)
      * @Assert\NotBlank(message="Number should not be blank")
      */
     private $number;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="neighborhood", type="string", length=255)
-     * @Assert\NotBlank(message="Neighborhood should not be blank")
-     */
-    private $neighborhood;
 
     /**
      * @var \DateTime
@@ -68,7 +52,7 @@ class AddressEntity
     private $updatedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\UserEntity", inversedBy="address")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\UserEntity", inversedBy="phone")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
@@ -93,26 +77,6 @@ class AddressEntity
     }
 
     /**
-     * Set street
-     *
-     * @param string $street
-     */
-    public function setStreet($street)
-    {
-        $this->street = $street;
-    }
-
-    /**
-     * Get street
-     *
-     * @return string
-     */
-    public function getStreet()
-    {
-        return $this->street;
-    }
-
-    /**
      * Set number
      *
      * @param string $number
@@ -130,25 +94,5 @@ class AddressEntity
     public function getNumber()
     {
         return $this->number;
-    }
-
-    /**
-     * Set neighborhood
-     *
-     * @param string $neighborhood
-     */
-    public function setNeighborhood($neighborhood)
-    {
-        $this->neighborhood = $neighborhood;
-    }
-
-    /**
-     * Get neighborhood
-     *
-     * @return string
-     */
-    public function getNeighborhood()
-    {
-        return $this->neighborhood;
     }
 }

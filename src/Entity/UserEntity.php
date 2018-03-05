@@ -22,7 +22,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class UserEntity
 {
-    use Base;
+    use Traits\Base;
     
     /**
      * @var int
@@ -63,6 +63,11 @@ class UserEntity
     private $address;
 
     /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\PhoneEntity", mappedBy="user")
+     */
+    private $phone;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
@@ -84,6 +89,7 @@ class UserEntity
     public function __construct()
     {
         $this->address = new ArrayCollection;
+        $this->phone = new ArrayCollection;
         $this->createdAt = new DateTime;
         $this->updatedAt = new DateTime;
     }
@@ -173,6 +179,24 @@ class UserEntity
      */ 
     public function addAddress(AddressEntity $address)
     {
-        $this->address = $address;
+        $this->address->add($address);
+    }
+
+    /**
+     * Get phone
+     */ 
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * Add phone
+     *
+     * @return  self
+     */ 
+    public function addPhone(PhoneEntity $phone)
+    {
+        $this->phone->add($phone);
     }
 }

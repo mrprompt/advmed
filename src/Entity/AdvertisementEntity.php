@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class AdvertisementEntity
 {
-    use Base;
+    use Traits\Base;
 
     const PERIOD = ['daily', 'week', 'month'];
     
