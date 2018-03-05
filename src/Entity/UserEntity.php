@@ -5,6 +5,7 @@ namespace App\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -57,6 +58,11 @@ class UserEntity
     private $password;
 
     /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\AddressEntity", mappedBy="user")
+     */
+    private $address;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
@@ -77,6 +83,7 @@ class UserEntity
      */
     public function __construct()
     {
+        $this->address = new ArrayCollection;
         $this->createdAt = new DateTime;
         $this->updatedAt = new DateTime;
     }
@@ -149,5 +156,23 @@ class UserEntity
     public function getPassword()
     {
         return $this->password;
+    }
+
+    /**
+     * Get address
+     */ 
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Add address
+     *
+     * @return  self
+     */ 
+    public function addAddress(AddressEntity $address)
+    {
+        $this->address = $address;
     }
 }

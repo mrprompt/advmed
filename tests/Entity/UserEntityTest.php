@@ -5,6 +5,8 @@ namespace App\Tests\Entity;
 
 use App\Tests\Entity\Traits\ChangeProtectedAttribute;
 use App\Entity\UserEntity;
+use App\Entity\AddressEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use DateTime;
@@ -206,5 +208,32 @@ class UserEntityTest extends TestCase
         $this->modifyAttribute($this->user, 'updatedAt', $obj->updatedAt);
 
         $this->assertEquals($this->user->getUpdatedAt(), $obj->updatedAt);
+    }
+
+    /**
+     * @test
+     * @dataProvider validObjects
+     * @covers       \App\Entity\UserEntity::__construct
+     * @covers       \App\Entity\UserEntity::getAddress
+     */
+    public function getAddressMustBeReturnArrayCollection()
+    {
+        $result = $this->user->getAddress();
+
+        $this->assertInstanceOf(ArrayCollection::class, $result);
+    }
+
+    /**
+     * @test
+     * @dataProvider validObjects
+     * @covers       \App\Entity\UserEntity::__construct
+     * @covers       \App\Entity\UserEntity::addAddress
+     */
+    public function addAddressMustBeReturn()
+    {
+        $address = new AddressEntity;
+        $result = $this->user->addAddress($address);
+
+        $this->assertNull($result);
     }
 }
