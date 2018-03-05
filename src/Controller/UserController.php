@@ -77,7 +77,9 @@ class UserController extends Controller
             );
 
             return $this->json($user, 201);
-        } catch (\Exception $ex) {
+        } catch (\OverflowException $ex) {
+            return $this->json($ex->getMessage(), 400);
+        } catch (\InvalidArgumentException $ex) {
             return $this->json($ex->getMessage(), 400);
         }
     }

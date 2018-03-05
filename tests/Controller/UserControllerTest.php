@@ -10,25 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class UserControllerTest extends WebTestCase
 {
-    /**
-     * Bootstrap
-     */
-    public function setUp()
-    {
-        $kernel = self::bootKernel();
-
-        $this->client = static::createClient();
-    }
-
-    /**
-     * Shutdown
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-        
-        $this->client = null;
-    }
+    use Traits\Base;
     
     /**
      * @test
@@ -48,8 +30,8 @@ class UserControllerTest extends WebTestCase
     {
         $user1 = [
             'name' => 'foo',
-            'email' => uniqid() . '@foo.bar',
-            'password' => uniqid(),
+            'email' => 'foo@foo.bar',
+            'password' => '123123123',
             'phone' => '0000000000',
             'street' => 'fooo',
             'number' => '000',
@@ -77,6 +59,20 @@ class UserControllerTest extends WebTestCase
         $this->assertNotEmpty($result['id']);
         $this->assertNotEmpty($result['createdAt']);
         $this->assertNotEmpty($result['updatedAt']);
+    }
+    
+    /**
+     * @test
+     * @dataProvider validUsers
+     * @covers \App\Controller\UserController::add
+     * @depends addWithValidRequestReturnResponseWithId
+     */
+    public function addWithRepeatEmailThrowsException($data)
+    {
+        $crawler = $this->client->request('POST', '/user/', $data);
+        $result = json_decode($this->client->getResponse()->getContent(), true);
+
+        $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
     }
     
     /**

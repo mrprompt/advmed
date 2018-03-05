@@ -10,26 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class ReportControllerTest extends WebTestCase
 {
-    /**
-     * Bootstrap
-     */
-    public function setUp()
-    {
-        $kernel = self::bootKernel();
-
-        $this->client = static::createClient();
-    }
-
-    /**
-     * Shutdown
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-        
-        $this->client = null;
-    }
-
+    use Traits\Base;
+    
     /**
      * @test
      * @covers \App\Controller\ReportController::index

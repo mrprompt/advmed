@@ -10,25 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class SubscriptionControllerTest extends WebTestCase
 {
-    /**
-     * Bootstrap
-     */
-    public function setUp()
-    {
-        $kernel = self::bootKernel();
-
-        $this->client = static::createClient();
-    }
-
-    /**
-     * Shutdown
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-        
-        $this->client = null;
-    }
+    use Traits\Base;
 
     /**
      * Data Provider

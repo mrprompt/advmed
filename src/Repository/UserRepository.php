@@ -96,7 +96,7 @@ class UserRepository extends ServiceEntityRepository
 
             return $user;
         } catch (UniqueConstraintViolationException $ex) {
-            throw new \InvalidArgumentException("An user with this email is already registered");
+            throw new \OverflowException("An user with this email is already registered");
         }
     }
     
