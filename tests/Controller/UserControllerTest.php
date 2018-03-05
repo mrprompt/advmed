@@ -66,7 +66,7 @@ class UserControllerTest extends WebTestCase
      * @test
      * @dataProvider validUsers
      */
-    public function testAddWithValidRequestReturnResponseWithId($data)
+    public function addWithValidRequestReturnResponseWithId($data)
     {
         $crawler = $this->client->request('POST', '/user/', $data);
         $result = json_decode($this->client->getResponse()->getContent(), true);
