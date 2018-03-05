@@ -48,6 +48,12 @@ class SubscriptionController extends Controller
         Request $request
     ): JsonResponse
     {
+        if ($request->getContentType() === 'json') {
+            $data = json_decode($request->getContent(), true);
+            
+            $request->request->replace($data);
+        }
+
         $period = $request->get('period');
         $title = $request->get('title');
         $description = $request->get('description');
@@ -81,6 +87,12 @@ class SubscriptionController extends Controller
         Request $request
     ): JsonResponse
     {
+        if ($request->getContentType() === 'json') {
+            $data = json_decode($request->getContent(), true);
+            
+            $request->request->replace($data);
+        }
+        
         $id = (int) $request->get('id');
         $title = (string) $request->get('title');
         $description = (string) $request->get('description');

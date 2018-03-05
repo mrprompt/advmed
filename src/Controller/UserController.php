@@ -51,6 +51,12 @@ class UserController extends Controller
         Request $request
     ): JsonResponse
     {
+        if ($request->getContentType() === 'json') {
+            $data = json_decode($request->getContent(), true);
+            
+            $request->request->replace($data);
+        }
+
         $user = new UserEntity;
         $user->setName($request->get('name'));
         $user->setEmail($request->get('email'));
@@ -96,6 +102,12 @@ class UserController extends Controller
         
         if (!$user) {
             throw $this->createNotFoundException('The user does not exist');
+        }
+
+        if ($request->getContentType() === 'json') {
+            $data = json_decode($request->getContent(), true);
+            
+            $request->request->replace($data);
         }
 
         $user->setName($request->get('name'));
