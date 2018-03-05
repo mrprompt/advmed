@@ -6,6 +6,7 @@ php:
 before_script:
   - composer selfupdate
   - composer install --dev --prefer-dist
+  - DATABASE_URL="sqlite:///%kernel.project_dir%/var/test.db" ./bin/console doctrine:schema:create
   # - composer require codeclimate/php-test-reporter
 
 script:
