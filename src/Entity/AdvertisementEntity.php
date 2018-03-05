@@ -84,7 +84,7 @@ class AdvertisementEntity
      *
      * @return int
      */ 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -104,7 +104,7 @@ class AdvertisementEntity
      *
      * @return string
      */
-    public function getName():string
+    public function getName(): string
     {
         return $this->name;
     }

@@ -60,7 +60,7 @@ class UserControllerTest extends WebTestCase
             [
                 $user1
             ]
-            ];
+        ];
     }
     
     /**

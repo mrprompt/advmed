@@ -48,11 +48,16 @@ class SubscriptionRepositoryTest extends KernelTestCase
      * @test
      * @covers \App\Repository\SubscriptionRepository::__construct
      * @covers \App\Repository\SubscriptionRepository::create
-     * @expectedException \Doctrine\DBAL\Exception\NotNullConstraintViolationException
+     * @expectedException \InvalidArgumentException
      */
     public function createWithUnpopulatedEntityThrowsException()
     {
-        $result = $this->obj->create(new SubscriptionEntity());
+        $result = $this->obj->create(
+            0,
+            '',
+            '',
+            ''
+        );
     }
 
     /**
@@ -62,14 +67,12 @@ class SubscriptionRepositoryTest extends KernelTestCase
      */
     public function createMustBeReturnSubscriptionEntity()
     {
-        $subscription = new SubscriptionEntity();
-        $subscription->setTitle('foo');
-        $subscription->setDescription('foo');
-        $subscription->setPrice(10.00);
-        $subscription->setActive(true);
-        $subscription->setValidity(new DateTime);
-        
-        $result = $this->obj->create($subscription);
+        $result = $this->obj->create(
+            1,
+            'foo',
+            'foo bar',
+            'daily'
+        );
 
         $this->assertInstanceOf(SubscriptionEntity::class, $result);
     }
@@ -81,13 +84,7 @@ class SubscriptionRepositoryTest extends KernelTestCase
      */
     public function updateMustBeReturnSubscriptionEntity()
     {
-        $subscription = new SubscriptionEntity();
-        $subscription->setTitle('foo');
-        $subscription->setDescription('foo foo foo');
-        $subscription->setActive(true);
-        $subscription->setValidity(new DateTime);
-
-        $result = $this->obj->update(1, $subscription);
+        $result = $this->obj->update(1, 'foo', 'foo bar bar');
 
         $this->assertInstanceOf(SubscriptionEntity::class, $result);
     }
@@ -100,10 +97,40 @@ class SubscriptionRepositoryTest extends KernelTestCase
      */
     public function updateWithAbsentThrowsException()
     {
-        $subscription = new SubscriptionEntity();
+        $this->obj->update(0, 'foo', 'foo bar bar');
+    }
 
-        $result = $this->obj->update(0, $subscription);
+    /**
+     * @test
+     * @covers \App\Repository\SubscriptionRepository::__construct
+     * @covers \App\Repository\SubscriptionRepository::update
+     * @expectedException \InvalidArgumentException
+     */
+    public function updateWithEmptyValuesThrowsException()
+    {
+        $this->obj->update(1, '', '');
+    }
+
+    /**
+     * @test
+     * @covers \App\Repository\SubscriptionRepository::__construct
+     * @covers \App\Repository\SubscriptionRepository::delete
+     */
+    public function deleteMustBeReturnSubscriptionEntity()
+    {
+        $result = $this->obj->delete(1);
 
         $this->assertInstanceOf(SubscriptionEntity::class, $result);
+    }
+
+    /**
+     * @test
+     * @covers \App\Repository\SubscriptionRepository::__construct
+     * @covers \App\Repository\SubscriptionRepository::delete
+     * @expectedException \OutOfRangeException
+     */
+    public function deleteWithAbsentThrowsException()
+    {
+        $this->obj->delete(0);
     }
 }

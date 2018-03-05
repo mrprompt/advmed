@@ -55,13 +55,13 @@ class SubscriptionEntity
     private $price;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\AdvertisementEntity")
+     * @ORM\OneToOne(targetEntity="\App\Entity\AdvertisementEntity", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="advertisement_id", referencedColumnName="id")
      */
     private $advertisement;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\UserEntity")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\UserEntity", inversedBy="subscription")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
@@ -193,24 +193,6 @@ class SubscriptionEntity
     public function setAdvertisement($advertisement)
     {
         $this->advertisement = $advertisement;
-    }
-
-    /**
-     * Get the value of user
-     */ 
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
-     * Set the value of user
-     *
-     * @return  self
-     */ 
-    public function setUser($user)
-    {
-        $this->user = $user;
     }
 
     /**

@@ -70,6 +70,11 @@ class UserEntity
     private $phone;
 
     /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\SubscriptionEntity", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $subscription;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
@@ -92,6 +97,7 @@ class UserEntity
     {
         $this->address = new ArrayCollection;
         $this->phone = new ArrayCollection;
+        $this->subscription = new ArrayCollection;
         $this->createdAt = new DateTime;
         $this->updatedAt = new DateTime;
     }
@@ -200,5 +206,23 @@ class UserEntity
     public function addPhone(PhoneEntity $phone)
     {
         $this->phone->add($phone);
+    }
+
+    /**
+     * Get subscription
+     */ 
+    public function getSubscription()
+    {
+        return $this->subscription;
+    }
+
+    /**
+     * Add subscription
+     *
+     * @return  self
+     */ 
+    public function addSubscription(SubscriptionEntity $subscription)
+    {
+        $this->subscription->add($subscription);
     }
 }

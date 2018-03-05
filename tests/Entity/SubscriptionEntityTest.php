@@ -247,35 +247,6 @@ class SubscriptionEntityTest extends TestCase
      * @test
      * @dataProvider validObjects
      * @covers       \App\Entity\SubscriptionEntity::__construct
-     * @covers       \App\Entity\SubscriptionEntity::getUser
-     */
-    public function getUserMustBeReturnEntity($obj)
-    {
-        $this->modifyAttribute($this->subscription, 'user', $obj->user);
-        
-        $result = $this->subscription->getUser();
-
-        $this->assertInstanceOf(UserEntity::class, $result);
-    }
-
-    /**
-     * @test
-     * @dataProvider validObjects
-     * @covers       \App\Entity\SubscriptionEntity::__construct
-     * @covers       \App\Entity\SubscriptionEntity::setUser
-     */
-    public function setUserMustBeReturnNull()
-    {
-        $user = new UserEntity;
-        $result = $this->subscription->setUser($user);
-
-        $this->assertNull($result);
-    }
-
-    /**
-     * @test
-     * @dataProvider validObjects
-     * @covers       \App\Entity\SubscriptionEntity::__construct
      * @covers       \App\Entity\SubscriptionEntity::getPrice
      */
     public function getPriceMustBeReturnEntity($obj)
