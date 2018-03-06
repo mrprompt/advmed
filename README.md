@@ -6,46 +6,22 @@ Projeto Teste para [AdvMed](http://www.advmed.com.br/).
 
 ## Install
 
-1 - Install dependencies
-
 ```console
 composer.phar install
-```
-
-2 - Create database
-
-```console
 ./bin/console doctrine:schema:create
-```
-
-3 - Load fixtures
-
-```console
 ./bin/console doctrine:fixtures:load
 ```
 
-## Running
+## Internal Server
 
 ```console
 ./bin/console server:start
-```
-
-## Stoping
-
-```console
 ./bin/console server:stop
 ```
 
 ## Testing
 
-1 - Create database structure
-
 ```console
-DATABASE_URL="sqlite:///%kernel.project_dir%/var/test.db" ./bin/console doctrine:schema:create
-```
-
-2 - Run tests
-
-```console
+DATABASE_URL="sqlite:///%kernel.project_dir%/var/test.db" ./bin/console doctrine:schema:create # only 1st time
 ./bin/phpunit
 ```
