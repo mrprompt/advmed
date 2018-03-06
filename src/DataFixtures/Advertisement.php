@@ -49,10 +49,10 @@ class Advertisement extends Fixture implements DependentFixtureInterface
     {
         $advertisement = new AdvertisementEntity();
         $advertisement->setName('Foo');
-        $advertisement->setPeriod('month');
+        $advertisement->setPeriod(array_rand(AdvertisementEntity::PERIOD));
         $advertisement->setTitle('Foo');
         $advertisement->setDescription('Foo Bar Bar');
-        $advertisement->setPrice(5.00);
+        $advertisement->setPrice(AdvertisementEntity::PERIOD[ $advertisement->getPeriod() ]);
         $advertisement->setActive(true);
         $advertisement->setValidity(new DateTime());
 
