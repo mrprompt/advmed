@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  * 
  * @author Thiago Paes <mrprompt@gmail.com>
  */
-class SubscriptionControllerTest extends WebTestCase
+class AdvertisementControllerTest extends WebTestCase
 {
     use Traits\Base;
 
@@ -56,7 +56,7 @@ class SubscriptionControllerTest extends WebTestCase
     
     /**
      * @test
-     * @covers \App\Controller\SubscriptionController::index
+     * @covers \App\Controller\AdvertisementController::index
      */
     public function testIndex()
     {
@@ -71,7 +71,7 @@ class SubscriptionControllerTest extends WebTestCase
     /**
      * @test
      * @dataProvider validSubscriptions
-     * @covers \App\Controller\SubscriptionController::add
+     * @covers \App\Controller\AdvertisementController::add
      */
     public function addWithValidRequestReturnResponseWithId($data)
     {
@@ -92,7 +92,7 @@ class SubscriptionControllerTest extends WebTestCase
     /**
      * @test
      * @dataProvider invalidSubscriptions
-     * @covers \App\Controller\SubscriptionController::add
+     * @covers \App\Controller\AdvertisementController::add
      */
     public function addWithInvalidRequestReturnResponseWithId($data)
     {
@@ -105,7 +105,7 @@ class SubscriptionControllerTest extends WebTestCase
     /**
      * @test
      * @dataProvider validSubscriptions
-     * @covers \App\Controller\SubscriptionController::update
+     * @covers \App\Controller\AdvertisementController::update
      */
     public function updateWithValidRequestReturnResponseWithId($data)
     {
@@ -118,7 +118,7 @@ class SubscriptionControllerTest extends WebTestCase
     /**
      * @test
      * @dataProvider validSubscriptions
-     * @covers \App\Controller\SubscriptionController::update
+     * @covers \App\Controller\AdvertisementController::update
      * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function updateWithNotFoundReturnError($data)
@@ -131,7 +131,7 @@ class SubscriptionControllerTest extends WebTestCase
     
     /**
      * @test
-     * @covers \App\Controller\SubscriptionController::update
+     * @covers \App\Controller\AdvertisementController::update
      */
     public function updateWithInvalidRequestReturnError()
     {
@@ -143,7 +143,7 @@ class SubscriptionControllerTest extends WebTestCase
     
     /**
      * @test
-     * @covers \App\Controller\SubscriptionController::delete
+     * @covers \App\Controller\AdvertisementController::delete
      */
     public function deleteWithValidRequestReturnResponseWithId()
     {
@@ -155,7 +155,7 @@ class SubscriptionControllerTest extends WebTestCase
     
     /**
      * @test
-     * @covers \App\Controller\SubscriptionController::delete
+     * @covers \App\Controller\AdvertisementController::delete
      * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function deleteWithUnknownAdvertisementDispatchError()
@@ -165,7 +165,7 @@ class SubscriptionControllerTest extends WebTestCase
     
     /**
      * @test
-     * @covers \App\Controller\SubscriptionController::details
+     * @covers \App\Controller\AdvertisementController::details
      */
     public function detailsWithValidRequestReturnResponseWithId()
     {
@@ -178,7 +178,7 @@ class SubscriptionControllerTest extends WebTestCase
     /**
      * @test
      * @dataProvider validSubscriptions
-     * @covers \App\Controller\SubscriptionController::details
+     * @covers \App\Controller\AdvertisementController::details
      * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function detailsWithUnknownAdvertisementDispatchError()
