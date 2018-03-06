@@ -67,40 +67,36 @@ class UserRepository extends ServiceEntityRepository
         string $neighborhood
     ): UserEntity
     {
-        try {
-            $phone = new PhoneEntity;
-            $phone->setNumber($phoneNumber);
+        $phone = new PhoneEntity;
+        $phone->setNumber($phoneNumber);
 
-            $this->em->persist($phone);
+        $this->em->persist($phone);
 
-            $address = new AddressEntity;
-            $address->setStreet($street);
-            $address->setNumber($number);
-            $address->setNeighborhood($neighborhood);
+        $address = new AddressEntity;
+        $address->setStreet($street);
+        $address->setNumber($number);
+        $address->setNeighborhood($neighborhood);
 
-            $this->em->persist($address);
+        $this->em->persist($address);
 
-            $user = new UserEntity;
-            $user->setName($name);
-            $user->setEmail($email);
-            $user->setPassword($password);
-            $user->setActive(true);
-            $user->addAddress($address);
-            $user->addPhone($phone);
+        $user = new UserEntity;
+        $user->setName($name);
+        $user->setEmail($email);
+        $user->setPassword($password);
+        $user->setActive(true);
+        $user->addAddress($address);
+        $user->addPhone($phone);
 
-            $errors = $this->validator->validate($user);
+        $errors = $this->validator->validate($user);
 
-            if (count($errors) > 0) {
-                throw new \InvalidArgumentException((string) $errors);
-            }
-
-            $this->em->persist($user);
-            $this->em->flush();
-
-            return $user;
-        } catch (UniqueConstraintViolationException $ex) {
-            throw new \OverflowException("An user with this email is already registered");
+        if (count($errors) > 0) {
+            throw new \InvalidArgumentException((string) $errors);
         }
+
+        $this->em->persist($user);
+        $this->em->flush();
+
+        return $user;
     }
     
     /**

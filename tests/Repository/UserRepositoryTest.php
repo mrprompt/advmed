@@ -5,12 +5,14 @@ use App\Entity\UserEntity;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
+ * User Repository Test Case
+ * 
  * @author Thiago Paes <mrprompt@gmail.com>
  */
 class UserRepositoryTest extends KernelTestCase
 {
     /**
-     * @var UserEntity
+     * @var \App\Repository\UserRepository
      */
     protected $obj;
 
@@ -85,6 +87,25 @@ class UserRepositoryTest extends KernelTestCase
     /**
      * @test
      * @covers \App\Repository\UserRepository::__construct
+     * @covers \App\Repository\UserRepository::create
+     * @expectedException \InvalidArgumentException
+     */
+    public function createRepeatedThrowsException()
+    {
+        $result = $this->obj->create(
+            'Foo Bar',
+            'user1@users.net',
+            uniqid(),
+            '00000',
+            '1A',
+            'FooBarBar',
+            'FooBarBarBar'
+        );
+    }
+
+    /**
+     * @test
+     * @covers \App\Repository\UserRepository::__construct
      * @covers \App\Repository\UserRepository::update
      */
     public function updateMustBeReturnUserEntity()
@@ -122,6 +143,24 @@ class UserRepositoryTest extends KernelTestCase
     /**
      * @test
      * @covers \App\Repository\UserRepository::__construct
+     * @covers \App\Repository\UserRepository::update
+     * @expectedException \InvalidArgumentException
+     */
+    public function updateWithInvalidArgumentsThrowsException()
+    {
+        $this->obj->update(
+            1,
+            '',
+            '',
+            '1A',
+            'FooBarBar',
+            'FooBarBarBar'
+        );
+    }
+
+    /**
+     * @test
+     * @covers \App\Repository\UserRepository::__construct
      * @covers \App\Repository\UserRepository::delete
      */
     public function deleteMustBeReturnUserEntity()
@@ -139,8 +178,6 @@ class UserRepositoryTest extends KernelTestCase
      */
     public function deleteWithAbsentThrowsException()
     {
-        $user = new UserEntity();
-        
         $this->obj->delete(0);
     }
 }
