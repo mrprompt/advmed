@@ -21,9 +21,9 @@ class AdvertisementEntity
     use Traits\Base;
 
     const PERIOD = [
-        'daily' => 3.33, 
-        'week' => 5.00,
-        'month' => 10.00
+        'daily' => 3.50, 
+        'week' => 5.50,
+        'month' => 10.01
     ];
     
     /**

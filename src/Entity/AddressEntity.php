@@ -70,12 +70,6 @@ class AddressEntity
     private $updatedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\UserEntity", inversedBy="address")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    private $user;
-
-    /**
      * constructor
      */
     public function __construct()

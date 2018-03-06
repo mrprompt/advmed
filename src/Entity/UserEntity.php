@@ -60,12 +60,20 @@ class UserEntity
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\AddressEntity", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity="\App\Entity\AddressEntity", cascade={"persist", "remove"})
+     * @ORM\JoinTable(name="users_addresses",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="address_id", referencedColumnName="id", unique=true)}
+     * )
      */
     private $address;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\PhoneEntity", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity="\App\Entity\PhoneEntity", cascade={"persist", "remove"})
+     * @ORM\JoinTable(name="users_phones",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="phone_id", referencedColumnName="id", unique=true)}
+     * )
      */
     private $phone;
 

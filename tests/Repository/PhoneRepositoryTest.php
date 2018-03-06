@@ -47,11 +47,22 @@ class PhoneRepositoryTest extends KernelTestCase
      * @test
      * @covers \App\Repository\PhoneRepository::__construct
      * @covers \App\Repository\PhoneRepository::create
-     * @expectedException \Doctrine\DBAL\Exception\NotNullConstraintViolationException
+     * @expectedException \TypeError
+     */
+    public function createWithNullThrowsError()
+    {
+        $result = $this->obj->create(1, null);
+    }
+
+    /**
+     * @test
+     * @covers \App\Repository\PhoneRepository::__construct
+     * @covers \App\Repository\PhoneRepository::create
+     * @expectedException \InvalidArgumentException
      */
     public function createWithUnpopulatedEntityThrowsException()
     {
-        $result = $this->obj->create(new PhoneEntity());
+        $result = $this->obj->create(1, '');
     }
 
     /**
@@ -61,10 +72,7 @@ class PhoneRepositoryTest extends KernelTestCase
      */
     public function createMustBeReturnPhoneEntity()
     {
-        $phone = new PhoneEntity();
-        $phone->setNumber('000000');
-        
-        $result = $this->obj->create($phone);
+        $result = $this->obj->create(1, '000000000');
 
         $this->assertInstanceOf(PhoneEntity::class, $result);
     }
@@ -76,10 +84,7 @@ class PhoneRepositoryTest extends KernelTestCase
      */
     public function updateMustBeReturnPhoneEntity()
     {
-        $phone = new PhoneEntity();
-        $phone->setNumber('000000');
-
-        $result = $this->obj->update(1, $phone);
+        $result = $this->obj->update(1, 1, '0000000');
 
         $this->assertInstanceOf(PhoneEntity::class, $result);
     }
@@ -90,12 +95,22 @@ class PhoneRepositoryTest extends KernelTestCase
      * @covers \App\Repository\PhoneRepository::update
      * @expectedException \OutOfRangeException
      */
-    public function updateWithAbsentThrowsException()
+    public function updateWithUnkownUserThrowsException()
     {
-        $phone = new PhoneEntity();
-        $phone->setNumber('000000');
+        $result = $this->obj->update(0, 1, '999999999');
 
-        $result = $this->obj->update(0, $phone);
+        $this->assertInstanceOf(PhoneEntity::class, $result);
+    }
+
+    /**
+     * @test
+     * @covers \App\Repository\PhoneRepository::__construct
+     * @covers \App\Repository\PhoneRepository::update
+     * @expectedException \OutOfRangeException
+     */
+    public function updateWithUnkownPhoneThrowsException()
+    {
+        $result = $this->obj->update(1, 0, '999999999');
 
         $this->assertInstanceOf(PhoneEntity::class, $result);
     }

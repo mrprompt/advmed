@@ -47,11 +47,32 @@ class AddressRepositoryTest extends KernelTestCase
      * @test
      * @covers \App\Repository\AddressRepository::__construct
      * @covers \App\Repository\AddressRepository::create
-     * @expectedException \Doctrine\DBAL\Exception\NotNullConstraintViolationException
+     * @expectedException \OutOfRangeException
+     */
+    public function createWithUnkdownUserThrowsException()
+    {
+        $result = $this->obj->create(
+            0,
+            '',
+            '',
+            ''
+        );
+    }
+
+    /**
+     * @test
+     * @covers \App\Repository\AddressRepository::__construct
+     * @covers \App\Repository\AddressRepository::create
+     * @expectedException \InvalidArgumentException
      */
     public function createWithUnpopulatedEntityThrowsException()
     {
-        $result = $this->obj->create(new AddressEntity());
+        $result = $this->obj->create(
+            1,
+            '',
+            '',
+            ''
+        );
     }
 
     /**
@@ -61,12 +82,12 @@ class AddressRepositoryTest extends KernelTestCase
      */
     public function createMustBeReturnAddressEntity()
     {
-        $address = new AddressEntity();
-        $address->setStreet(uniqid());
-        $address->setNumber(uniqid());
-        $address->setNeighborhood(uniqid());
-        
-        $result = $this->obj->create($address);
+        $result = $this->obj->create(
+            1,
+            uniqid(),
+            uniqid(),
+            uniqid()
+        );
 
         $this->assertInstanceOf(AddressEntity::class, $result);
     }
@@ -78,12 +99,13 @@ class AddressRepositoryTest extends KernelTestCase
      */
     public function updateMustBeReturnAddressEntity()
     {
-        $address = new AddressEntity();
-        $address->setStreet(uniqid());
-        $address->setNumber(uniqid());
-        $address->setNeighborhood(uniqid());
-
-        $result = $this->obj->update(1, $address);
+        $result = $this->obj->update(
+            1,
+            1,
+            uniqid(),
+            uniqid(),
+            uniqid()
+        );
 
         $this->assertInstanceOf(AddressEntity::class, $result);
     }
@@ -96,13 +118,29 @@ class AddressRepositoryTest extends KernelTestCase
      */
     public function updateWithAbsentThrowsException()
     {
-        $address = new AddressEntity();
-        $address->setStreet(uniqid());
-        $address->setNumber(uniqid());
-        $address->setNeighborhood(uniqid());
+        $result = $this->obj->update(
+            1,
+            0,
+            uniqid(),
+            uniqid(),
+            uniqid()
+        );
+    }
 
-        $result = $this->obj->update(0, $address);
-
-        $this->assertInstanceOf(AddressEntity::class, $result);
+    /**
+     * @test
+     * @covers \App\Repository\AddressRepository::__construct
+     * @covers \App\Repository\AddressRepository::update
+     * @expectedException \OutOfRangeException
+     */
+    public function updateWithUnkownUserThrowsException()
+    {
+        $result = $this->obj->update(
+            0,
+            1,
+            uniqid(),
+            uniqid(),
+            uniqid()
+        );
     }
 }

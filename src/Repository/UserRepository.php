@@ -68,20 +68,23 @@ class UserRepository extends ServiceEntityRepository
     ): UserEntity
     {
         try {
-            $user = new UserEntity;
-            $user->setName($name);
-            $user->setEmail($email);
-            $user->setPassword($password);
-            $user->setActive(true);
-
             $phone = new PhoneEntity;
             $phone->setNumber($phoneNumber);
+
+            $this->em->persist($phone);
 
             $address = new AddressEntity;
             $address->setStreet($street);
             $address->setNumber($number);
             $address->setNeighborhood($neighborhood);
 
+            $this->em->persist($address);
+
+            $user = new UserEntity;
+            $user->setName($name);
+            $user->setEmail($email);
+            $user->setPassword($password);
+            $user->setActive(true);
             $user->addAddress($address);
             $user->addPhone($phone);
 

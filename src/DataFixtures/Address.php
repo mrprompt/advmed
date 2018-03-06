@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace App\DataFixtures;
 
-use App\Entity\AdvertisementEntity;
+use App\Entity\AddressEntity;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -13,7 +13,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
  *
  * @author Thiago Paes <mrprompt@gmail.com>
  */
-class Advertisement extends Fixture implements DependentFixtureInterface
+class Address extends Fixture implements DependentFixtureInterface
 {
     /**
      * Loader
@@ -25,7 +25,7 @@ class Advertisement extends Fixture implements DependentFixtureInterface
         $i = 1;
 
         while ($i <= 10) {
-            $this->createAdvertisement($i, $manager);
+            $this->createAddress($i, $manager);
 
             $i++;
         }
@@ -36,7 +36,7 @@ class Advertisement extends Fixture implements DependentFixtureInterface
     public function getDependencies()
     {
         return array(
-            Address::class,
+            Phone::class,
         );
     }
 
@@ -45,28 +45,24 @@ class Advertisement extends Fixture implements DependentFixtureInterface
      * @param ObjectManager $manager
      * @return UserModel
      */
-    private function createAdvertisement($i, ObjectManager $manager)
+    private function createAddress($i, ObjectManager $manager)
     {
-        $advertisement = new AdvertisementEntity();
-        $advertisement->setName('Foo');
-        $advertisement->setPeriod('month');
-        $advertisement->setTitle('Foo');
-        $advertisement->setDescription('Foo Bar Bar');
-        $advertisement->setPrice(5.00);
-        $advertisement->setActive(true);
-        $advertisement->setValidity(new DateTime());
+        $address = new AddressEntity();
+        $address->setStreet('Street name');
+        $address->setNumber('1A');
+        $address->setNeighborhood('Neighborhood name');
 
-        $manager->persist($advertisement);
+        $manager->persist($address);
 
         $user = $this->getReference('user_' . $i);
-        $user->addAdvertisement($advertisement);
+        $user->addAddress($address);
 
         $manager->persist($user);
 
         $manager->flush();
 
-        $this->addReference('advertisement_' . $i, $advertisement);
+        $this->addReference('address_' . $i, $address);
 
-        return $advertisement;
+        return $address;
     }
 }

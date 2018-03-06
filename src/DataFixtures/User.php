@@ -42,7 +42,7 @@ class User extends Fixture
             'id' => $i,
             'name' => 'User ' . $i,
             'email' => 'user' . $i . '@users.net',
-            'password' => '$2y$12$n6QLWv6X2nhUygZX1zrKCenZAORhzqtZpFVpr6f8tOlcef7Q8rFj.', // 'xxxxx'
+            'password' => '123123123',
             'active' => true 
         ];
 
