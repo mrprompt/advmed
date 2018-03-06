@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace App\Controller;
 
-use App\Repository\SubscriptionRepository;
+use App\Repository\AdvertisementRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -24,11 +24,11 @@ class ReportController extends Controller
      * @Route("/report/", name="report_index")
      * @Method("GET")
      *
-     * @param SubscriptionRepository    $repository
+     * @param AdvertisementRepository    $repository
      * @param SerializerInterface       $serializer
      */
     public function index(
-        SubscriptionRepository $repository, 
+        AdvertisementRepository $repository, 
         SerializerInterface $serializer
     ): JsonResponse
     {
@@ -41,12 +41,12 @@ class ReportController extends Controller
      * @Route("/report/{id}", name="report_details")
      * @Method("GET")
      *
-     * @param SubscriptionRepository    $repository
+     * @param AdvertisementRepository    $repository
      * @param SerializerInterface       $serializer
      * @param Request                   $request
      */
     public function details(
-        SubscriptionRepository $repository, 
+        AdvertisementRepository $repository, 
         SerializerInterface $serializer,
         Request $request
     ): JsonResponse

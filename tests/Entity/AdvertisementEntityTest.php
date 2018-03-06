@@ -54,6 +54,11 @@ class AdvertisementEntityTest extends TestCase
         $obj->id = 1;
         $obj->name  = 'Teste';
         $obj->period = 'daily';
+        $obj->title  = 'Teste';
+        $obj->description = 'teste teste teste';
+        $obj->active = true;
+        $obj->price = AdvertisementEntity::PERIOD['month'];
+        $obj->validity = new DateTime;
         $obj->createdAt = new DateTime;
         $obj->updatedAt = new DateTime;
 
@@ -158,6 +163,84 @@ class AdvertisementEntityTest extends TestCase
      * @test
      * @dataProvider validObjects
      * @covers       \App\Entity\AdvertisementEntity::__construct
+     * @covers       \App\Entity\AdvertisementEntity::setTitle
+     */
+    public function setTitleReturnEmpty($obj)
+    {
+        $result = $this->advertisement->setTitle($obj->title);
+
+        $this->assertEmpty($result);
+    }
+
+    /**
+     * @test
+     * @dataProvider validObjects
+     * @covers       \App\Entity\AdvertisementEntity::__construct
+     * @covers       \App\Entity\AdvertisementEntity::getTitle
+     */
+    public function getTitleReturnValue($obj)
+    {
+        $this->modifyAttribute($this->advertisement, 'title', $obj->title);
+
+        $this->assertEquals($this->advertisement->getTitle(), $obj->title);
+    }
+
+    /**
+     * @test
+     * @dataProvider validObjects
+     * @covers       \App\Entity\AdvertisementEntity::__construct
+     * @covers       \App\Entity\AdvertisementEntity::setDescription
+     */
+    public function setDescriptionReturnEmpty($obj)
+    {
+        $result = $this->advertisement->setDescription($obj->description);
+
+        $this->assertEmpty($result);
+    }
+
+    /**
+     * @test
+     * @dataProvider validObjects
+     * @covers       \App\Entity\AdvertisementEntity::__construct
+     * @covers       \App\Entity\AdvertisementEntity::getDescription
+     */
+    public function getDescriptionReturnValue($obj)
+    {
+        $this->modifyAttribute($this->advertisement, 'description', $obj->description);
+
+        $this->assertEquals($this->advertisement->getDescription(), $obj->description);
+    }
+
+    /**
+     * @test
+     * @dataProvider validObjects
+     * @covers       \App\Entity\AdvertisementEntity::__construct
+     * @covers       \App\Entity\AdvertisementEntity::setActive
+     */
+    public function setActiveReturnEmpty($obj)
+    {
+        $result = $this->advertisement->setActive($obj->active);
+
+        $this->assertEmpty($result);
+    }
+    
+    /**
+     * @test
+     * @dataProvider validObjects
+     * @covers       \App\Entity\AdvertisementEntity::__construct
+     * @covers       \App\Entity\AdvertisementEntity::getActive
+     */
+    public function getActiveReturnValue($obj)
+    {
+        $this->modifyAttribute($this->advertisement, 'active', $obj->active);
+
+        $this->assertEquals($this->advertisement->getActive(), $obj->active);
+    }
+
+    /**
+     * @test
+     * @dataProvider validObjects
+     * @covers       \App\Entity\AdvertisementEntity::__construct
      * @covers       \App\Entity\AdvertisementEntity::setPeriod
      */
     public function setPeriodReturnEmpty($obj)
@@ -190,6 +273,60 @@ class AdvertisementEntityTest extends TestCase
         $this->modifyAttribute($this->advertisement, 'period', $obj->period);
 
         $this->assertEquals($this->advertisement->getPeriod(), $obj->period);
+    }
+
+    /**
+     * @test
+     * @dataProvider validObjects
+     * @covers       \App\Entity\AdvertisementEntity::__construct
+     * @covers       \App\Entity\AdvertisementEntity::getPrice
+     */
+    public function getPriceMustBeReturnEntity($obj)
+    {
+        $this->modifyAttribute($this->advertisement, 'price', $obj->price);
+        
+        $result = $this->advertisement->getPrice();
+
+        $this->assertEquals($result, $obj->price);
+    }
+
+    /**
+     * @test
+     * @dataProvider validObjects
+     * @covers       \App\Entity\AdvertisementEntity::__construct
+     * @covers       \App\Entity\AdvertisementEntity::setPrice
+     */
+    public function setPriceMustBeReturnNull($obj)
+    {
+        $result = $this->advertisement->setPrice($obj->price);
+
+        $this->assertNull($result);
+    }
+
+    /**
+     * @test
+     * @dataProvider validObjects
+     * @covers       \App\Entity\AdvertisementEntity::__construct
+     * @covers       \App\Entity\AdvertisementEntity::setValidity
+     */
+    public function setValidityReturnEmpty($obj)
+    {
+        $result = $this->advertisement->setValidity($obj->validity);
+
+        $this->assertEmpty($result);
+    }
+
+    /**
+     * @test
+     * @dataProvider validObjects
+     * @covers       \App\Entity\AdvertisementEntity::__construct
+     * @covers       \App\Entity\AdvertisementEntity::getValidity
+     */
+    public function getValidityReturnValue($obj)
+    {
+        $this->modifyAttribute($this->advertisement, 'validity', $obj->validity);
+
+        $this->assertEquals($this->advertisement->getValidity(), $obj->validity);
     }
 
     /**

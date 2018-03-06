@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace App\Controller;
 
-use App\Repository\SubscriptionRepository;
+use App\Repository\AdvertisementRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -14,36 +14,36 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Subscription controller
+ * Advertisement controller
  * 
  * @author Thiago Paes <mrprompt@gmail.com>
  */
-class SubscriptionController extends Controller
+class AdvertisementController extends Controller
 {
     /**
-     * @Route("/subscription/", name="subscription_index")
+     * @Route("/advertisement/", name="advertisement_index")
      * @Method("GET")
      *
-     * @param SubscriptionRepository         $repository
+     * @param AdvertisementRepository         $repository
      * @param SerializerInterface    $serializer
      */
-    public function index(SubscriptionRepository $repository, SerializerInterface $serializer): JsonResponse
+    public function index(AdvertisementRepository $repository, SerializerInterface $serializer): JsonResponse
     {
-        $subscriptions = $repository->findAll();
+        $advertisements = $repository->findAll();
 
-        return $this->json($subscriptions);
+        return $this->json($advertisements);
     }
 
     /**
-     * @Route("/subscription/", name="subscription_add")
+     * @Route("/advertisement/", name="advertisement_add")
      * @Method("POST")
      *
-     * @param SubscriptionRepository        $subscriptionRepository
+     * @param AdvertisementRepository        $advertisementRepository
      * @param SerializerInterface           $serializer
      * @param Request                       $request
      */
     public function add(
-        SubscriptionRepository $subscriptionRepository, 
+        AdvertisementRepository $advertisementRepository, 
         SerializerInterface $serializer,
         Request $request
     ): JsonResponse
@@ -60,29 +60,29 @@ class SubscriptionController extends Controller
         $uid = (int) $request->get('user');
 
         try {
-            $subscription = $subscriptionRepository->create(
+            $advertisement = $advertisementRepository->create(
                 $uid,
                 $title,
                 $description,
                 $period
             );
 
-            return $this->json($subscription, 201);
+            return $this->json($advertisement, 201);
         } catch (\Exception $ex) {
             return $this->json($ex->getMessage(), 400);
         }
     }
 
     /**
-     * @Route("/subscription/{id}", name="subscription_update")
+     * @Route("/advertisement/{id}", name="advertisement_update")
      * @Method("PUT")
      *
-     * @param SubscriptionRepository    $repository
+     * @param AdvertisementRepository    $repository
      * @param SerializerInterface       $serializer
      * @param Request                   $request
      */
     public function update(
-        SubscriptionRepository $repository, 
+        AdvertisementRepository $repository, 
         SerializerInterface $serializer,
         Request $request
     ): JsonResponse
@@ -98,9 +98,9 @@ class SubscriptionController extends Controller
         $description = (string) $request->get('description');
 
         try {
-            $subscription = $repository->update($id, $title, $description);
+            $advertisement = $repository->update($id, $title, $description);
 
-            return $this->json($subscription, 204);
+            return $this->json($advertisement, 204);
         } catch (\OutOfRangeException $ex) {
             throw $this->createNotFoundException($ex->getMessage());
         } catch (\Exception $ex) {
@@ -109,15 +109,15 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * @Route("/subscription/{id}", name="subscription_delete")
+     * @Route("/advertisement/{id}", name="advertisement_delete")
      * @Method("DELETE")
      *
-     * @param SubscriptionRepository        $repository
+     * @param AdvertisementRepository        $repository
      * @param SerializerInterface   $serializer
      * @param Request               $request
      */
     public function delete(
-        SubscriptionRepository $repository, 
+        AdvertisementRepository $repository, 
         SerializerInterface $serializer,
         Request $request
     ): JsonResponse
@@ -125,9 +125,9 @@ class SubscriptionController extends Controller
         $id = (int) $request->get('id');
 
         try {
-            $subscription = $repository->delete($id);
+            $advertisement = $repository->delete($id);
 
-            return $this->json($subscription, 204);
+            return $this->json($advertisement, 204);
         } catch (\OutOfRangeException $ex) {
             throw $this->createNotFoundException($ex->getMessage());
         } catch (\Exception $ex) {
@@ -136,27 +136,27 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * @Route("/subscription/{id}", name="subscription_details")
+     * @Route("/advertisement/{id}", name="advertisement_details")
      * @Method("GET")
      *
-     * @param SubscriptionRepository        $repository
+     * @param AdvertisementRepository        $repository
      * @param SerializerInterface   $serializer
      * @param Request               $request
      */
     public function details(
-        SubscriptionRepository $repository, 
+        AdvertisementRepository $repository, 
         SerializerInterface $serializer,
         Request $request
     ): JsonResponse
     {
         $id = (int) $request->get('id');
 
-        $subscription = $repository->find($id);
+        $advertisement = $repository->find($id);
 
-        if (!$subscription) {
-            throw $this->createNotFoundException('The subscription does not exist');
+        if (!$advertisement) {
+            throw $this->createNotFoundException('The advertisement does not exist');
         }
 
-        return $this->json($subscription, 200);
+        return $this->json($advertisement, 200);
     }
 }

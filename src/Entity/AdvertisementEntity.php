@@ -46,6 +46,30 @@ class AdvertisementEntity
     /**
      * @var string
      *
+     * @ORM\Column(name="title", type="string", length=255)
+     * @Assert\NotBlank(message="Title should not be blank")
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text")
+     * @Assert\NotBlank(message="Description should not be blank")
+     */
+    private $description;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="price", type="float")
+     * @Assert\NotBlank(message="Price should not be blank")
+     */
+    private $price;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="period", type="string", length=11)
      * @Assert\Choice(
      *     choices = { "daily", "week", "month" },
@@ -53,6 +77,22 @@ class AdvertisementEntity
      * )
      */
     private $period;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="active", type="boolean", options={"default": true})
+     * @Assert\Type("bool")
+     */
+    private $active;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="validity", type="datetime")
+     * @Assert\Type("\DateTime")
+     */
+    private $validity;
 
     /**
      * @var \DateTime
@@ -110,6 +150,66 @@ class AdvertisementEntity
     }
 
     /**
+     * Set title
+     *
+     * @param string $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set active
+     *
+     * @param string $active
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * Get active
+     *
+     * @return string
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
      * Get the value of period
      *
      * @return string
@@ -131,5 +231,49 @@ class AdvertisementEntity
         }
         
         $this->period = $period;
+    }
+
+    /**
+     * Get the value of price
+     *
+     * @return  float
+     */ 
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Set the value of price
+     *
+     * @param  float  $price
+     *
+     * @return  self
+     */ 
+    public function setPrice(float $price)
+    {
+        $this->price = $price;
+    }
+
+    /**
+     * Get the value of validity
+     *
+     * @return  \DateTime
+     */ 
+    public function getValidity()
+    {
+        return $this->validity;
+    }
+
+    /**
+     * Set the value of validity
+     *
+     * @param  \DateTime  $validity
+     *
+     * @return  self
+     */ 
+    public function setValidity(\DateTime $validity)
+    {
+        $this->validity = $validity;
     }
 }

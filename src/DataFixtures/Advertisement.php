@@ -47,13 +47,22 @@ class Advertisement extends Fixture implements DependentFixtureInterface
      */
     private function createUser($i, ObjectManager $manager)
     {
-        $user = $this->getReference('user_' . $i);
-
         $advertisement = new AdvertisementEntity();
         $advertisement->setName('Foo');
         $advertisement->setPeriod('month');
+        $advertisement->setTitle('Foo');
+        $advertisement->setDescription('Foo Bar Bar');
+        $advertisement->setPrice(5.00);
+        $advertisement->setActive(true);
+        $advertisement->setValidity(new DateTime());
 
         $manager->persist($advertisement);
+
+        $user = $this->getReference('user_' . $i);
+        $user->addAdvertisement($advertisement);
+
+        $manager->persist($user);
+
         $manager->flush();
 
         $this->addReference('advertisement_' . $i, $advertisement);

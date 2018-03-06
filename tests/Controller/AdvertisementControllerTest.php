@@ -4,7 +4,7 @@ namespace App\Tests\Controller;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
- * Subsription Controller Test Case
+ * Advertisement Controller Test Case
  * 
  * @author Thiago Paes <mrprompt@gmail.com>
  */
@@ -19,7 +19,7 @@ class SubscriptionControllerTest extends WebTestCase
      */
     public function validSubscriptions()
     {
-        $subscription1 = [
+        $advertisement1 = [
             'title' => 'foo',
             'description' => 'foo bar bar',
             'period' => 'week',
@@ -28,7 +28,7 @@ class SubscriptionControllerTest extends WebTestCase
 
         return [
             [
-                $subscription1
+                $advertisement1
             ]
         ];
     }
@@ -40,7 +40,7 @@ class SubscriptionControllerTest extends WebTestCase
      */
     public function invalidSubscriptions()
     {
-        $subscription1 = [
+        $advertisement1 = [
             'title' => '',
             'description' => '',
             'period' => '',
@@ -49,7 +49,7 @@ class SubscriptionControllerTest extends WebTestCase
 
         return [
             [
-                $subscription1
+                $advertisement1
             ]
         ];
     }
@@ -60,7 +60,7 @@ class SubscriptionControllerTest extends WebTestCase
      */
     public function testIndex()
     {
-        $crawler = $this->client->request('GET', '/subscription/');
+        $crawler = $this->client->request('GET', '/advertisement/');
         $content = $this->client->getResponse()->getContent();
         $json = json_decode($content, true);
 
@@ -75,7 +75,7 @@ class SubscriptionControllerTest extends WebTestCase
      */
     public function addWithValidRequestReturnResponseWithId($data)
     {
-        $crawler = $this->client->request('POST', '/subscription/', $data);
+        $crawler = $this->client->request('POST', '/advertisement/', $data);
         $result = json_decode($this->client->getResponse()->getContent(), true);
 
         $this->assertEquals(201, $this->client->getResponse()->getStatusCode());
@@ -83,7 +83,6 @@ class SubscriptionControllerTest extends WebTestCase
         $this->assertNotEmpty($result['title']);
         $this->assertNotEmpty($result['description']);
         $this->assertNotEmpty($result['active']);
-        $this->assertNotEmpty($result['advertisement']);
         $this->assertNotEmpty($result['price']);
         $this->assertNotEmpty($result['validity']);
         $this->assertNotEmpty($result['createdAt']);
@@ -97,7 +96,7 @@ class SubscriptionControllerTest extends WebTestCase
      */
     public function addWithInvalidRequestReturnResponseWithId($data)
     {
-        $crawler = $this->client->request('POST', '/subscription/', $data);
+        $crawler = $this->client->request('POST', '/advertisement/', $data);
         $result = json_decode($this->client->getResponse()->getContent(), true);
 
         $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
@@ -110,7 +109,7 @@ class SubscriptionControllerTest extends WebTestCase
      */
     public function updateWithValidRequestReturnResponseWithId($data)
     {
-        $crawler = $this->client->request('PUT', '/subscription/1', $data);
+        $crawler = $this->client->request('PUT', '/advertisement/1', $data);
         $result = json_decode($this->client->getResponse()->getContent(), true);
 
         $this->assertEquals(204, $this->client->getResponse()->getStatusCode());
@@ -124,7 +123,7 @@ class SubscriptionControllerTest extends WebTestCase
      */
     public function updateWithNotFoundReturnError($data)
     {
-        $crawler = $this->client->request('PUT', '/subscription/0', $data);
+        $crawler = $this->client->request('PUT', '/advertisement/0', $data);
         $result = json_decode($this->client->getResponse()->getContent(), true);
 
         $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
@@ -136,7 +135,7 @@ class SubscriptionControllerTest extends WebTestCase
      */
     public function updateWithInvalidRequestReturnError()
     {
-        $crawler = $this->client->request('PUT', '/subscription/1', []);
+        $crawler = $this->client->request('PUT', '/advertisement/1', []);
         $result = json_decode($this->client->getResponse()->getContent(), true);
 
         $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
@@ -148,7 +147,7 @@ class SubscriptionControllerTest extends WebTestCase
      */
     public function deleteWithValidRequestReturnResponseWithId()
     {
-        $crawler = $this->client->request('DELETE', '/subscription/1');
+        $crawler = $this->client->request('DELETE', '/advertisement/1');
         $result = json_decode($this->client->getResponse()->getContent(), true);
 
         $this->assertEquals(204, $this->client->getResponse()->getStatusCode());
@@ -159,9 +158,9 @@ class SubscriptionControllerTest extends WebTestCase
      * @covers \App\Controller\SubscriptionController::delete
      * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
-    public function deleteWithUnknownSubsriptionDispatchError()
+    public function deleteWithUnknownAdvertisementDispatchError()
     {
-        $this->client->request('DELETE', '/subscription/0');
+        $this->client->request('DELETE', '/advertisement/0');
     }
     
     /**
@@ -170,7 +169,7 @@ class SubscriptionControllerTest extends WebTestCase
      */
     public function detailsWithValidRequestReturnResponseWithId()
     {
-        $crawler = $this->client->request('GET', '/subscription/1');
+        $crawler = $this->client->request('GET', '/advertisement/1');
         $result = json_decode($this->client->getResponse()->getContent(), true);
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
@@ -182,8 +181,8 @@ class SubscriptionControllerTest extends WebTestCase
      * @covers \App\Controller\SubscriptionController::details
      * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
-    public function detailsWithUnknownSubsriptionDispatchError()
+    public function detailsWithUnknownAdvertisementDispatchError()
     {
-        $this->client->request('GET', '/subscription/0');
+        $this->client->request('GET', '/advertisement/0');
     }
 }

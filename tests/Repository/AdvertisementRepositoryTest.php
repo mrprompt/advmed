@@ -43,41 +43,128 @@ class AdvertisementRepositoryTest extends KernelTestCase
         $this->obj = null;
     }
 
-    public function validData()
+    /**
+     * @test
+     * @covers \App\Repository\AdvertisementRepository::__construct
+     * @covers \App\Repository\AdvertisementRepository::create
+     * @expectedException \InvalidArgumentException
+     */
+    public function createWithUnpopulatedEntityThrowsException()
     {
-        $advertisement1 = new AdvertisementEntity;
-        $advertisement1->setName('foo');
-        $advertisement1->setPeriod('week');
-        
-        return [
-            [
-                $advertisement1
-            ]
-        ];
+        $result = $this->obj->create(
+            0,
+            '',
+            '',
+            ''
+        );
     }
 
     /**
      * @test
      * @covers \App\Repository\AdvertisementRepository::__construct
      * @covers \App\Repository\AdvertisementRepository::create
-     * @dataProvider validData
      */
-    public function createWithValidData($data)
+    public function createMustBeReturnAdvertisementEntity()
     {
-        $result = $this->obj->create($data);
+        $result = $this->obj->create(
+            1,
+            'foo',
+            'foo bar',
+            'daily'
+        );
 
-        $this->assertTrue(is_object($result));
         $this->assertInstanceOf(AdvertisementEntity::class, $result);
     }
 
     /**
      * @test
      * @covers \App\Repository\AdvertisementRepository::__construct
-     * @covers \App\Repository\AdvertisementRepository::create
-     * @expectedException \Doctrine\DBAL\Exception\NotNullConstraintViolationException
+     * @covers \App\Repository\AdvertisementRepository::update
      */
-    public function createWithUnpopulatedEntityThrowsException()
+    public function updateMustBeReturnAdvertisementEntity()
     {
-        $this->obj->create(new AdvertisementEntity());
+        $result = $this->obj->update(1, 'foo', 'foo bar bar');
+
+        $this->assertInstanceOf(AdvertisementEntity::class, $result);
+    }
+
+    /**
+     * @test
+     * @covers \App\Repository\AdvertisementRepository::__construct
+     * @covers \App\Repository\AdvertisementRepository::update
+     * @expectedException \OutOfRangeException
+     */
+    public function updateWithAbsentThrowsException()
+    {
+        $this->obj->update(0, 'foo', 'foo bar bar');
+    }
+
+    /**
+     * @test
+     * @covers \App\Repository\AdvertisementRepository::__construct
+     * @covers \App\Repository\AdvertisementRepository::update
+     * @expectedException \InvalidArgumentException
+     */
+    public function updateWithEmptyValuesThrowsException()
+    {
+        $this->obj->update(1, '', '');
+    }
+
+    /**
+     * @test
+     * @covers \App\Repository\AdvertisementRepository::__construct
+     * @covers \App\Repository\AdvertisementRepository::delete
+     */
+    public function deleteMustBeReturnAdvertisementEntity()
+    {
+        $result = $this->obj->delete(1);
+
+        $this->assertInstanceOf(AdvertisementEntity::class, $result);
+    }
+
+    /**
+     * @test
+     * @covers \App\Repository\AdvertisementRepository::__construct
+     * @covers \App\Repository\AdvertisementRepository::delete
+     * @expectedException \OutOfRangeException
+     */
+    public function deleteWithAbsentThrowsException()
+    {
+        $this->obj->delete(0);
+    }
+
+    /**
+     * @test
+     * @covers \App\Repository\AdvertisementRepository::__construct
+     * @covers \App\Repository\AdvertisementRepository::reportAll
+     */
+    public function reportAllMustBeReturnArray()
+    {
+        $result = $this->obj->reportAll();
+
+        $this->assertTrue(is_array($result));
+    }
+
+    /**
+     * @test
+     * @covers \App\Repository\AdvertisementRepository::__construct
+     * @covers \App\Repository\AdvertisementRepository::reportByUser
+     */
+    public function reportByUserWithValidUserReturnArray()
+    {
+        $result = $this->obj->reportByUser(1);
+
+        $this->assertTrue(is_array($result));
+    }
+
+    /**
+     * @test
+     * @covers \App\Repository\AdvertisementRepository::__construct
+     * @covers \App\Repository\AdvertisementRepository::reportByUser
+     * @expectedException \OutOfRangeException
+     */
+    public function reportByUserWithAbsentThrowsException()
+    {
+        $this->obj->reportByUser(0);
     }
 }

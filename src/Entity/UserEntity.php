@@ -70,13 +70,13 @@ class UserEntity
     private $phone;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\SubscriptionEntity", cascade={"persist", "remove"})
-     * @ORM\JoinTable(name="users_subscriptions",
+     * @ORM\ManyToMany(targetEntity="\App\Entity\AdvertisementEntity", cascade={"persist", "remove"})
+     * @ORM\JoinTable(name="users_advertisements",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="subscription_id", referencedColumnName="id", unique=true)}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="advertisement_id", referencedColumnName="id", unique=true)}
      * )
      */
-    private $subscription;
+    private $advertisement;
 
     /**
      * @var boolean
@@ -109,7 +109,7 @@ class UserEntity
     {
         $this->address = new ArrayCollection;
         $this->phone = new ArrayCollection;
-        $this->subscription = new ArrayCollection;
+        $this->advertisement = new ArrayCollection;
         $this->createdAt = new DateTime;
         $this->updatedAt = new DateTime;
     }
@@ -221,21 +221,21 @@ class UserEntity
     }
 
     /**
-     * Get subscription
+     * Get advertisement
      */ 
-    public function getSubscription()
+    public function getAdvertisement()
     {
-        return $this->subscription;
+        return $this->advertisement;
     }
 
     /**
-     * Add subscription
+     * Add advertisement
      *
      * @return  self
      */ 
-    public function addSubscription(SubscriptionEntity $subscription)
+    public function addAdvertisement(AdvertisementEntity $advertisement)
     {
-        $this->subscription->add($subscription);
+        $this->advertisement->add($advertisement);
     }
 
     /**
