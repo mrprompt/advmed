@@ -1,6 +1,8 @@
-# AdvMed [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/mrprompt/advmed/tree/master)
+# AdvMed 
 
-[![Build Status](https://travis-ci.com/mrprompt/advmed.svg?token=wjVH7pqe9uFCdhpp6XdL&branch=master)](https://travis-ci.com/mrprompt/advmed)
+[![Build Status](https://travis-ci.org/mrprompt/exemplo-advmed.svg?branch=master)](https://travis-ci.org/mrprompt/exemplo-advmed)
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/mrprompt/advmed/tree/master)
 
 Projeto Teste para [AdvMed](http://www.advmed.com.br/).
 
